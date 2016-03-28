@@ -18,6 +18,7 @@ from homeassistant.const import (
     HTTP_NOT_FOUND,
     ATTR_ENTITY_ID,
     )
+from homeassistant.helpers.config_validation import PLATFORM_SCHEMA  # noqa
 
 
 DOMAIN = 'camera'

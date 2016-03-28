@@ -58,6 +58,8 @@ def setup(hass, config):
         demo_config[component] = {CONF_PLATFORM: 'demo'}
         bootstrap.setup_component(hass, component, demo_config)
 
+    hass.pool.block_till_done()
+
     # Setup room groups
     lights = sorted(hass.states.entity_ids('light'))
     switches = sorted(hass.states.entity_ids('switch'))
