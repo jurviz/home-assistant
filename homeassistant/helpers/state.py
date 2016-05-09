@@ -6,7 +6,8 @@ from collections import defaultdict
 import homeassistant.util.dt as dt_util
 from homeassistant.components.media_player import (
     ATTR_MEDIA_CONTENT_ID, ATTR_MEDIA_CONTENT_TYPE, ATTR_MEDIA_SEEK_POSITION,
-    ATTR_MEDIA_VOLUME_LEVEL, ATTR_MEDIA_VOLUME_MUTED, SERVICE_PLAY_MEDIA)
+    ATTR_MEDIA_VOLUME_LEVEL, ATTR_MEDIA_VOLUME_MUTED, SERVICE_PLAY_MEDIA,
+    SERVICE_SELECT_SOURCE, ATTR_INPUT_SOURCE)
 from homeassistant.components.notify import (
     ATTR_MESSAGE, SERVICE_NOTIFY)
 from homeassistant.components.sun import (
@@ -42,6 +43,7 @@ SERVICE_ATTRIBUTES = {
     SERVICE_SET_AWAY_MODE: [ATTR_AWAY_MODE],
     SERVICE_SET_FAN_MODE: [ATTR_FAN],
     SERVICE_SET_TEMPERATURE: [ATTR_TEMPERATURE],
+    SERVICE_SELECT_SOURCE: [ATTR_INPUT_SOURCE],
 }
 
 # Update this dict when new services are added to HA.
@@ -90,9 +92,8 @@ class TrackStates(object):
 
 def get_changed_since(states, utc_point_in_time):
     """Return list of states that have been changed since utc_point_in_time."""
-    point_in_time = dt_util.strip_microseconds(utc_point_in_time)
-
-    return [state for state in states if state.last_updated >= point_in_time]
+    return [state for state in states
+            if state.last_updated >= utc_point_in_time]
 
 
 def reproduce_state(hass, states, blocking=False):
